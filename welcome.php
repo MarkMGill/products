@@ -1,8 +1,5 @@
 <?php
     session_start();
-
-    $username = "username";
-    $password = "password";
 ?>
 
 <!DOCTYPE html>
@@ -24,15 +21,7 @@
                         <h3><a href='products_read.php'>Products</a></h3>
                         <br><br>
                         <a href='logout.php'><input type=button class='btn btn-lg btn-primary' value=Logout name=logout></a>";
-                    } else {
-                        if($_POST['username'] == $username && $_POST['password'] == $password) {
-                            $_SESSION['username'] = $username;
-                            echo "<script>location.href='welcome.php'</script>";
-                    } else {
-                        echo "<script>alert('Username or Password incorrect!')</script>
-                        <script>location.href='index.php'</script>";
-                    }
-                    }
+                    } 
                 ?>
             </div>
         </div>
