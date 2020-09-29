@@ -1,4 +1,4 @@
-<?php include 'functions.php'; ?>
+<!--php include 'getProducts.php' ?-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -155,9 +155,7 @@
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
-                            <tbody id="tableBody">
-                                <?php echo showProducts(); ?>
-                            </tbody>
+                            <tbody id="tableBody"><!--php echo $output['table']; --></tbody>
                         </table>
                     </form>
                 </div>
@@ -170,9 +168,7 @@
             </div>
         </div>
         <nav aria-label="Page navigation text-center">
-            <ul class="pagination justify-content-center">
-                <?php showPaginationLinks() ?>
-            </ul>
+            <ul id="pagination-links" class="pagination justify-content-center"><!--php echo $output['links']; --></ul>
         </nav>
     </div>  
     <script src="js/jquery.min.js"></script>
@@ -180,5 +176,41 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="script.js"></script>
+    <script>
+        $(document).ready(function() {
+
+            getProducts();
+            
+            // load data
+            function getProducts(page) {
+                $.ajax({
+                    url: 'getProducts.php',
+                    method: "POST",
+                    dataType: "json",
+                    data: {page: page},
+                    success: function(data) {
+                        document.getElementById('tableBody').innerHTML = '';
+                        $('#tableBody').append(data.table);
+                        document.getElementById('pagination-links').innerHTML = '';
+                        $('#pagination-links').append(data.links);
+                        
+                        // set up event listeners for newly added buttons
+                        showUpdateVals();
+                        showDeleteVals(); 
+                    }
+                })
+            }
+            
+
+            // load data with pagination links
+            $(document).on('click', '.pagination-link', function(e) {
+                e.preventDefault();
+                var page = $(this).attr("id");
+                console.log(page);
+                getProducts(page);
+            });
+        });
+        
+    </script>
 </body>
 </html>
