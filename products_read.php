@@ -178,37 +178,9 @@
     <script src="script.js"></script>
     <script>
         $(document).ready(function() {
-
-            getProducts();
-            
-            // load data
-            function getProducts(page) {
-                $.ajax({
-                    url: 'getProducts.php',
-                    method: "POST",
-                    dataType: "json",
-                    data: {page: page},
-                    success: function(data) {
-                        document.getElementById('tableBody').innerHTML = '';
-                        $('#tableBody').append(data.table);
-                        document.getElementById('pagination-links').innerHTML = '';
-                        $('#pagination-links').append(data.links);
-                        
-                        // set up event listeners for newly added buttons
-                        showUpdateVals();
-                        showDeleteVals(); 
-                    }
-                })
-            }
-            
-
-            // load data with pagination links
-            $(document).on('click', '.pagination-link', function(e) {
-                e.preventDefault();
-                var page = $(this).attr("id");
-                console.log(page);
-                getProducts(page);
-            });
+            // load products data and pagination links
+            getProducts();          
+            loadPaginationLinks();
         });
         
     </script>
